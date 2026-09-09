@@ -1,0 +1,20 @@
+# 업로드 폴더에서는 어떤 스크립트도 실행되지 않도록 막습니다.
+# (이미지로 위장한 PHP 파일이 올라와도 실행되지 않게 하는 마지막 방어선)
+
+php_flag engine off
+
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>
+
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar
+
+<FilesMatch "\.(php|phtml|php[0-9]|pht|phar|cgi|pl|py|sh|htaccess)$">
+  Require all denied
+</FilesMatch>
+
+# 이미지만 열람 허용
+<FilesMatch "\.(jpe?g|png|webp|gif|svg)$">
+  Require all granted
+</FilesMatch>

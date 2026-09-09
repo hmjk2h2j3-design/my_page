@@ -1,0 +1,19 @@
+# 업로드된 이미지 (폴더 구조만 유지)
+uploads/projects/original/*
+uploads/projects/thumbnail/*
+!uploads/projects/original/.gitkeep
+!uploads/projects/thumbnail/.gitkeep
+
+# DB 미연결 상태에서 쌓이는 문의 기록
+data/contacts.jsonl
+
+# 로컬 설정 (배포 서버와 값이 달라지므로 각자 관리)
+# config/database.php
+
+# OS / 편집기
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+*.bak

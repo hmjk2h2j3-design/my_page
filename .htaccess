@@ -1,0 +1,68 @@
+# ============================================================
+#  Apache 설정 (XAMPP / 일반 PHP 호스팅 공통)
+# ============================================================
+
+# 디렉터리 목록 노출 금지
+Options -Indexes
+
+DirectoryIndex index.php index.html
+
+# ------------------------------------------------------------
+# 404
+# ------------------------------------------------------------
+ErrorDocument 404 /404.php
+
+# ------------------------------------------------------------
+# 기본 보안 헤더
+# ------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ------------------------------------------------------------
+# 정적 파일 캐시 (파일명 뒤 ?v= 로 갱신하므로 길게 잡아도 안전)
+# ------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css            "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType image/svg+xml       "access plus 30 days"
+  ExpiresByType image/webp          "access plus 30 days"
+  ExpiresByType image/png           "access plus 30 days"
+  ExpiresByType image/jpeg          "access plus 30 days"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+
+# ------------------------------------------------------------
+# 감춰야 하는 파일
+# ------------------------------------------------------------
+<FilesMatch "^\.|\.(sql|md|log|jsonl|bak)$">
+  Require all denied
+</FilesMatch>
+
+# ------------------------------------------------------------
+# 짧은 주소 (선택)
+#
+# 아래 주석을 풀면 /portfolio, /project/12, /about 형태로 접근할 수 있습니다.
+# 하위 폴더에 설치했다면 RewriteBase 를 그 경로로 바꿔 주세요.
+# ------------------------------------------------------------
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /
+#
+#   # 실제 파일/디렉터리는 그대로 통과
+#   RewriteCond %{REQUEST_FILENAME} -f [OR]
+#   RewriteCond %{REQUEST_FILENAME} -d
+#   RewriteRule ^ - [L]
+#
+#   RewriteRule ^project/([0-9]+)/?$   project.php?id=$1 [L,QSA]
+#   RewriteRule ^portfolio/?$          portfolio.php     [L,QSA]
+#   RewriteRule ^about/?$              about.php         [L,QSA]
+#   RewriteRule ^contact/?$            contact.php       [L,QSA]
+# </IfModule>

@@ -1,0 +1,146 @@
+/* portfolio.css — 아카이브 목록 (필터 + 메이슨리) */
+
+/* ------------------------------------------------------------------ */
+/* 툴바                                                                */
+/* ------------------------------------------------------------------ */
+
+.toolbar {
+  position: sticky;
+  top: 68px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px 28px;
+  padding-block: 16px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 22px;
+}
+
+.filters__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding-block: 4px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.filters__btn:hover { color: var(--ink); }
+
+.filters__btn.is-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.filters__count {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.filters__btn.is-active .filters__count { color: var(--accent); }
+
+.toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+.toolbar__select {
+  width: auto;
+  padding: 4px 24px 4px 2px;
+  font-size: var(--fs-small);
+  border-bottom-color: var(--line);
+  background-position: calc(100% - 10px) 55%, calc(100% - 5px) 55%;
+}
+
+.toolbar__total {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .toolbar {
+    top: 68px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .filters {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters__btn { white-space: nowrap; }
+}
+
+/* ------------------------------------------------------------------ */
+/* 메이슨리                                                            */
+/* ------------------------------------------------------------------ */
+
+/*
+  이미지 비율이 제각각이라 높이를 맞추지 않습니다.
+  JS가 각 항목의 실제 높이를 읽어 grid-row 를 몇 칸 차지할지 계산합니다.
+  (JS가 없으면 평범한 반응형 그리드로 그대로 보입니다.)
+*/
+.masonry {
+  --cols: 1;
+  --mgap: clamp(24px, 2.8vw, 42px);
+  --row: 8px;
+
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: var(--mgap);
+  align-items: start;
+}
+
+@media (min-width: 520px) { .masonry { --cols: 2; } }
+@media (min-width: 768px) { .masonry { --cols: 3; } }
+@media (min-width: 1180px) { .masonry { --cols: 4; } }
+
+.masonry.is-masonry {
+  grid-auto-rows: var(--row);
+}
+
+.masonry.is-masonry .work {
+  grid-row-end: span var(--span, 40);
+}
+
+.masonry .work { min-width: 0; }
+
+.masonry .work[hidden] { display: none; }
+
+/* 결과 없음 */
+.empty {
+  padding-block: clamp(60px, 10vw, 120px);
+  text-align: center;
+  color: var(--muted);
+}
+
+.empty__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--ink);
+  margin-bottom: 10px;
+}

@@ -1,0 +1,8 @@
+# 줄바꿈을 저장소에서는 LF 로 통일합니다.
+# (윈도우에서 작업하고 리눅스 서버에 올려도 파일이 통째로 바뀐 것처럼 보이지 않게)
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary

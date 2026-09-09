@@ -1,0 +1,494 @@
+/* home.css — 홈 전용 */
+
+/* ------------------------------------------------------------------ */
+/* 히어로                                                              */
+/* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* 배경 — 리소 인쇄처럼 번진 잉크 + 종이 그레인                        */
+/* ------------------------------------------------------------------ */
+
+/*
+  세기를 한 번에 조절하려면 --atmos-strength 만 바꾸면 됩니다.
+    0.6  더 옅게
+    1    기본
+    1.4  더 뚜렷하게 (그래도 본문 대비는 유지됩니다)
+*/
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-top: clamp(40px, 7vw, 84px);
+  --atmos-strength: 0.6;
+}
+
+/*
+  배경은 글이 없는 오른쪽 위 여백에만 몰아 둡니다.
+  제목과 본문이 앉는 왼쪽 아래로 갈수록 마스크로 사라지게 해서
+  어떤 화면 폭에서도 읽는 데 방해가 되지 않게 했습니다.
+*/
+.atmos {
+  position: absolute;
+  inset: -140px 0 auto 0;
+  height: calc(100% + 140px);
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(76% 56% at 88% 4%, #000 0%, rgba(0, 0, 0, 0.78) 36%, transparent 74%);
+  mask-image: radial-gradient(76% 56% at 88% 4%, #000 0%, rgba(0, 0, 0, 0.78) 36%, transparent 74%);
+}
+
+/* 잉크가 번진 자리. 흐림 필터 대신 그라데이션 자체를 부드럽게 해
+   매 프레임 다시 그리지 않도록 했습니다(모바일에서도 가볍습니다). */
+.atmos__ink {
+  position: absolute;
+  border-radius: 50%;
+  opacity: calc(var(--atmos-strength) * 1);
+  will-change: transform;
+}
+
+.atmos__ink--1 {
+  top: -18%;
+  right: -12%;
+  width: 62vw;
+  height: 62vw;
+  background: radial-gradient(closest-side, rgba(176, 73, 43, 0.17), rgba(176, 73, 43, 0) 70%);
+  animation: atmos-drift-a 46s ease-in-out infinite;
+}
+
+.atmos__ink--2 {
+  top: 22%;
+  left: -18%;
+  width: 54vw;
+  height: 54vw;
+  background: radial-gradient(closest-side, rgba(188, 143, 71, 0.16), rgba(188, 143, 71, 0) 70%);
+  animation: atmos-drift-b 62s ease-in-out infinite;
+}
+
+.atmos__ink--3 {
+  top: 48%;
+  left: 32%;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(closest-side, rgba(104, 118, 92, 0.13), rgba(104, 118, 92, 0) 70%);
+  animation: atmos-drift-c 54s ease-in-out infinite;
+}
+
+/*
+  기하 구성 — 큰 원호 세 개가 서로 다른 속도로 아주 느리게 지나갑니다.
+  겹치는 자리가 계속 바뀌면서 움직임이 생기지만, 형태 자체는 정지된 도형이라
+  질감(텍스처)이 아니라 '구성'으로 읽힙니다.
+*/
+.atmos__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(23, 20, 15, 0.24);
+  opacity: var(--atmos-strength);
+  will-change: transform;
+}
+
+.atmos__ring--1 {
+  top: -16%;
+  right: 2%;
+  width: 42vw;
+  height: 42vw;
+  animation: atmos-ring-a 52s ease-in-out infinite;
+}
+
+.atmos__ring--2 {
+  top: 4%;
+  right: 22%;
+  width: 28vw;
+  height: 28vw;
+  border-color: rgba(176, 73, 43, 0.38);
+  animation: atmos-ring-b 68s ease-in-out infinite;
+}
+
+.atmos__ring--3 {
+  top: -6%;
+  right: -8%;
+  width: 20vw;
+  height: 20vw;
+  border-color: rgba(23, 20, 15, 0.15);
+  animation: atmos-ring-c 44s ease-in-out infinite;
+}
+
+/*
+  하프톤 망점. 인쇄에서 옅은 회색을 만드는 방식 그대로,
+  점 크기가 다른 두 겹을 겹쳐 농담을 만듭니다.
+*/
+.atmos__dots {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.atmos__dots--fine {
+  opacity: calc(var(--atmos-strength) * 0.7);
+  background-image: radial-gradient(circle, rgba(23, 20, 15, 0.5) 1px, transparent 1.2px);
+  background-size: 15px 15px;
+  -webkit-mask-image: radial-gradient(52% 46% at 78% 12%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(52% 46% at 78% 12%, #000 0%, transparent 72%);
+  animation: atmos-dots-a 58s ease-in-out infinite;
+}
+
+.atmos__dots--coarse {
+  opacity: calc(var(--atmos-strength) * 0.55);
+  background-image: radial-gradient(circle, rgba(176, 73, 43, 0.55) 1.8px, transparent 2px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(34% 30% at 92% 4%, #000 0%, transparent 74%);
+  mask-image: radial-gradient(34% 30% at 92% 4%, #000 0%, transparent 74%);
+  animation: atmos-dots-b 77s ease-in-out infinite;
+}
+
+/* 종이 결. 이 레이어가 있어야 그라데이션이 화면이 아니라 인쇄물로 읽힙니다. */
+.atmos__grain {
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--atmos-strength) * 0.55);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: atmos-grain 8s steps(6) infinite;
+}
+
+@keyframes atmos-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-7%, 5%, 0) scale(1.14); }
+}
+
+@keyframes atmos-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
+  50%      { transform: translate3d(9%, -6%, 0) scale(1); }
+}
+
+@keyframes atmos-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-5%, -8%, 0) scale(1.1); }
+}
+
+/* 원호 세 개는 서로 다른 방향·주기로 움직여 겹치는 자리가 계속 바뀝니다. */
+@keyframes atmos-ring-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-4%, 3%, 0) scale(1.08); }
+}
+
+@keyframes atmos-ring-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(6%, -4%, 0) scale(0.94); }
+}
+
+@keyframes atmos-ring-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-7%, -3%, 0) scale(1.14); }
+}
+
+/* 망점은 판이 아주 조금 어긋난 것처럼만 움직입니다. */
+@keyframes atmos-dots-a {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-14px, 10px, 0); }
+}
+
+@keyframes atmos-dots-b {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(18px, -12px, 0); }
+}
+
+/* 그레인은 위치만 아주 조금 튀게 해서 종이가 살아 있는 느낌만 남깁니다. */
+@keyframes atmos-grain {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3px, 2px); }
+  40%  { transform: translate(2px, -3px); }
+  60%  { transform: translate(-2px, -2px); }
+  80%  { transform: translate(3px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmos__ink,
+  .atmos__ring,
+  .atmos__dots,
+  .atmos__grain { animation: none; }
+}
+
+/* 모바일에서는 잉크만 남기고 격자는 뺍니다 (좁은 화면에서 지저분해집니다) */
+@media (max-width: 767px) {
+  .hero { --atmos-strength: 0.75; }
+  .atmos__ring--3,
+  .atmos__dots--coarse { display: none; }
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero__statement {
+  margin-top: clamp(30px, 5vw, 58px);
+  max-width: 15ch;
+}
+
+.hero__statement em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  gap: 40px clamp(36px, 7vw, 110px);
+  align-items: start;
+  margin-top: clamp(38px, 5vw, 68px);
+}
+
+.hero__intro { max-width: 44ch; }
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+@media (max-width: 899px) {
+  .hero__grid { grid-template-columns: 1fr; }
+  .hero__statement { max-width: 18ch; }
+}
+
+/* 대표 작업물 */
+.hero__feature { margin-top: clamp(52px, 8vw, 104px); }
+
+.hero__feature-media {
+  background: var(--paper-2);
+  display: flex;
+  justify-content: center;
+}
+
+/* 대표 이미지가 세로형일 수도 있으므로, 자르는 대신 최대 높이만 제한합니다. */
+.hero__feature-media img {
+  max-height: 76vh;
+  width: auto;
+  max-width: 100%;
+}
+
+.hero__feature-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  margin-top: 14px;
+}
+
+.hero__feature-caption strong {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ------------------------------------------------------------------ */
+/* 선택 작업                                                           */
+/* ------------------------------------------------------------------ */
+
+.works {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(50px, 6vw, 92px) clamp(26px, 4vw, 60px);
+  align-items: start;
+}
+
+/* 첫 작업물은 가로로 크게 */
+.works__lead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 26px clamp(30px, 5vw, 72px);
+  align-items: center;
+  padding-bottom: clamp(18px, 3vw, 34px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.works__lead .work__meta {
+  grid-template-columns: 2.5rem 1fr;
+  padding-top: 0;
+}
+
+.works__lead .work__title {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.03em;
+}
+
+.works__lead .work__sub {
+  font-size: 0.9375rem;
+  margin-top: 4px;
+}
+
+.works__lead .work__note {
+  margin-top: 16px;
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+  max-width: 38ch;
+}
+
+/* 두 번째 열은 아래로 밀어 리듬을 만듦 */
+.works__item--offset { margin-top: clamp(0px, 6vw, 88px); }
+
+@media (max-width: 767px) {
+  .works { grid-template-columns: 1fr; }
+  .works__lead { grid-template-columns: 1fr; align-items: start; }
+  .works__item--offset { margin-top: 0; }
+}
+
+/* ------------------------------------------------------------------ */
+/* 전문 분야                                                           */
+/* ------------------------------------------------------------------ */
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 clamp(20px, 3vw, 44px);
+  border-top: 1px solid var(--line);
+}
+
+.field-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 3vw, 32px) 0 clamp(20px, 3vw, 28px);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.field-card__name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.field-card__body {
+  margin-top: 12px;
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.7;
+  flex: 1;
+}
+
+.field-card__link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+.field-card__link:hover { color: var(--accent); }
+
+.field-card__count {
+  font-family: var(--font-serif);
+  color: var(--accent);
+}
+
+@media (max-width: 899px) {
+  .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 519px) {
+  .fields { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------------------------------------------ */
+/* 작업 방식                                                           */
+/* ------------------------------------------------------------------ */
+
+.approach {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(32px, 6vw, 88px);
+}
+
+.approach__item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 6px 12px;
+  padding: clamp(24px, 3vw, 34px) 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.approach__item:first-child,
+.approach__item:nth-child(2) { border-top-color: var(--line); }
+
+.approach__num {
+  grid-row: span 2;
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  color: var(--accent);
+  padding-top: 4px;
+}
+
+.approach__body {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.72;
+  max-width: 40ch;
+}
+
+@media (max-width: 767px) {
+  .approach { grid-template-columns: 1fr; }
+  .approach__item:nth-child(2) { border-top-color: var(--line-soft); }
+}
+
+/* ------------------------------------------------------------------ */
+/* 어두운 연락 배너                                                    */
+/* ------------------------------------------------------------------ */
+
+.band {
+  background: var(--ink);
+  color: var(--paper-2);
+  margin-top: var(--section);
+  padding-block: clamp(64px, 9vw, 118px);
+}
+
+.band .label { color: #9a9186; }
+
+.band__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 32px clamp(36px, 6vw, 96px);
+  align-items: end;
+  margin-top: 26px;
+}
+
+.band__title {
+  color: var(--paper);
+  max-width: 16ch;
+}
+
+.band__mail {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.2;
+  color: var(--paper);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.35);
+  padding-bottom: 5px;
+  word-break: break-all;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.band__mail:hover { color: #e0866a; border-bottom-color: #e0866a; }
+
+.band__note {
+  margin-top: 18px;
+  font-size: 0.9375rem;
+  color: #9a9186;
+  line-height: 1.7;
+  max-width: 38ch;
+}
+
+@media (max-width: 767px) {
+  .band__grid { grid-template-columns: 1fr; align-items: start; }
+}
