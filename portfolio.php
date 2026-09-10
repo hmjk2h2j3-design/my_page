@@ -43,7 +43,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="page-head__grid">
-      <h1 class="h1">
+      <h1 class="h1" data-split>
         자르지 않고<br>
         원래 비율로 모아 둔 아카이브.
       </h1>

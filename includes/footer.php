@@ -46,6 +46,7 @@ $links  = array_filter($site['links'] ?? []);
 </footer>
 
 <script src="<?= e(asset('assets/js/common.js')) ?>" defer></script>
+<script src="<?= e(asset('assets/js/motion.js')) ?>" defer></script>
 <?php foreach ($pageJs as $js): ?>
 <script src="<?= e(asset('assets/js/' . $js)) ?>" defer></script>
 <?php endforeach; ?>

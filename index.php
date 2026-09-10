@@ -71,7 +71,7 @@ require __DIR__ . '/includes/header.php';
       <span class="label"><?= e(site('location')) ?></span>
     </div>
 
-    <h1 class="hero__statement display">
+    <h1 class="hero__statement display" data-split>
       더 쉽게 보고,<br>
       더 자연스럽게 쓰도록<br>
       <em>디자인</em>합니다.
@@ -85,10 +85,10 @@ require __DIR__ . '/includes/header.php';
           아래는 최근 3년간의 작업과, 각 작업에서 실제로 무엇을 바꿨는지에 대한 기록입니다.
         </p>
         <div class="hero__actions">
-          <a class="btn" href="<?= e(url('portfolio.php')) ?>">
+          <a class="btn magnet" href="<?= e(url('portfolio.php')) ?>">
             작업 전체 보기 <span class="btn__arrow" aria-hidden="true">&rarr;</span>
           </a>
-          <a class="btn btn--ghost" href="<?= e(url('about.php')) ?>">소개 및 역량</a>
+          <a class="btn btn--ghost magnet" href="<?= e(url('about.php')) ?>">소개 및 역량</a>
         </div>
       </div>
 

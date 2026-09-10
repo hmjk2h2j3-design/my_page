@@ -49,35 +49,5 @@
     });
   }
 
-  /* ---------------------------------------------------------------- */
-  /* 등장 효과 — 한 번만, 아주 짧게                                    */
-  /* ---------------------------------------------------------------- */
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var supported = !reduced && 'IntersectionObserver' in window;
-
-  var observer = supported
-    ? new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-in');
-          observer.unobserve(entry.target);
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 })
-    : null;
-
-  /** 새로 추가된 .reveal 요소를 관찰 대상에 넣습니다. */
-  function scanReveal(root) {
-    var targets = (root || document).querySelectorAll('.reveal:not(.is-in)');
-    targets.forEach(function (el) {
-      if (observer) {
-        observer.observe(el);
-      } else {
-        el.classList.add('is-in');
-      }
-    });
-  }
-
-  window.Reveal = { scan: scanReveal };
-  scanReveal(document);
+  /* 등장·커서 효과는 assets/js/motion.js 가 담당합니다. */
 })();

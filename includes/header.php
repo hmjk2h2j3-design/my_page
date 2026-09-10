@@ -56,12 +56,17 @@ $nav = [
 <?php foreach ($pageCss as $css): ?>
 <link rel="stylesheet" href="<?= e(asset('assets/css/' . $css)) ?>">
 <?php endforeach; ?>
+<!-- 움직임 관련 규칙은 마지막에 둡니다 (헤더 높이·툴바 위치를 덮어써야 하므로) -->
+<link rel="stylesheet" href="<?= e(asset('assets/css/motion.css')) ?>">
 
 <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body class="<?= e($bodyClass) ?>">
 
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+<div class="progress" aria-hidden="true"><i></i></div>
+<div class="cursor" aria-hidden="true"></div>
 
 <header class="site-header">
   <div class="container site-header__inner">

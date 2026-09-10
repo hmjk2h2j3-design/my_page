@@ -1,0 +1,193 @@
+/* motion.css — 스크롤·포인터 상호작용
+ *
+ * 전부 transform / opacity 만 다루므로 GPU에서 처리됩니다.
+ * 움직임을 끄고 싶으면 이 파일 링크만 지우면 원래 정적 사이트로 돌아갑니다.
+ * prefers-reduced-motion 을 켠 사용자에게는 자동으로 모두 꺼집니다.
+ */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --header-h: 68px;
+}
+
+/* ------------------------------------------------------------------ */
+/* 스크롤 진행 표시                                                    */
+/* ------------------------------------------------------------------ */
+
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+}
+
+/* ------------------------------------------------------------------ */
+/* 헤더 — 스크롤하면 살짝 줄어듭니다                                   */
+/* ------------------------------------------------------------------ */
+
+.site-header__inner {
+  height: var(--header-h);
+  transition: height 0.32s var(--ease-out);
+}
+
+.toolbar {
+  top: var(--header-h);
+  transition: top 0.32s var(--ease-out);
+}
+
+/* ------------------------------------------------------------------ */
+/* 제목 — 줄 단위로 밀려 올라옵니다                                    */
+/* ------------------------------------------------------------------ */
+
+.line {
+  display: block;
+  overflow: hidden;
+}
+
+.line > i {
+  display: block;
+  font-style: normal;
+  transform: translateY(110%);
+}
+
+.is-in > .line > i,
+.line.is-in > i {
+  transform: none;
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+/* ------------------------------------------------------------------ */
+/* 일반 요소 등장 — 순서대로 조금씩 늦게                               */
+/* ------------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.no-js .reveal,
+.no-js .line > i {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* 이미지 — 아래에서 위로 닦이듯 드러납니다                            */
+/*                                                                     */
+/* 끝난 상태는 clip-path 없음 · scale(1) 이므로                        */
+/* 작업물이 잘리지 않는다는 원칙은 그대로 지켜집니다.                  */
+/* ------------------------------------------------------------------ */
+
+html:not(.no-js) .work__media,
+html:not(.no-js) .hero__feature-media,
+html:not(.no-js) .project-gallery figure {
+  clip-path: inset(0 0 var(--wipe, 100%) 0);
+  transition: clip-path 1.05s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+html:not(.no-js) .work__media img,
+html:not(.no-js) .hero__feature-media img,
+html:not(.no-js) .project-gallery figure img {
+  transform: scale(var(--zoom, 1.06));
+  transition: transform 1.25s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.is-shown {
+  --wipe: 0%;
+  --zoom: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* 커서 — 작업물 위에서만 나타나는 원형 라벨                           */
+/* ------------------------------------------------------------------ */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+.cursor.is-on { opacity: 1; }
+
+/* 포인터가 없는 기기(터치)에서는 아예 만들지 않습니다 — JS에서 처리 */
+
+/* ------------------------------------------------------------------ */
+/* 버튼 — 커서 쪽으로 아주 살짝 끌립니다                               */
+/* ------------------------------------------------------------------ */
+
+.magnet {
+  will-change: transform;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.magnet.is-pulled { transition: transform 0.12s linear; }
+
+/* ------------------------------------------------------------------ */
+/* 움직임 최소화 설정                                                  */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .line > i {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html:not(.no-js) .work__media,
+  html:not(.no-js) .hero__feature-media,
+  html:not(.no-js) .project-gallery figure {
+    clip-path: none;
+    transition: none;
+  }
+
+  html:not(.no-js) .work__media img,
+  html:not(.no-js) .hero__feature-media img,
+  html:not(.no-js) .project-gallery figure img {
+    transform: none;
+    transition: none;
+  }
+
+  .cursor { display: none; }
+  .progress i { transition: none; }
+  .site-header__inner,
+  .toolbar { transition: none; }
+}
