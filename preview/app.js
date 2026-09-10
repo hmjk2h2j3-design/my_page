@@ -156,15 +156,15 @@
           '<span class="label">Portfolio — ' + YEAR + '</span>' +
           '<span class="label">' + esc(SITE.location) + '</span>' +
         '</div>' +
-        '<h1 class="hero__statement display">더 쉽게 보고,<br>더 자연스럽게 쓰도록<br><em>디자인</em>합니다.</h1>' +
+        '<h1 class="hero__statement display" data-split>더 쉽게 보고,<br>더 자연스럽게 쓰도록<br><em>디자인</em>합니다.</h1>' +
         '<div class="hero__grid">' +
           '<div class="hero__intro">' +
             '<p class="lede">' + esc(SITE.nameKo) + '입니다. 모바일 앱과 웹 서비스의 화면을 설계하고, ' +
               '브랜드가 인쇄물까지 같은 얼굴로 확장되도록 규칙을 만듭니다. ' +
               '아래는 최근 3년간의 작업과, 각 작업에서 실제로 무엇을 바꿨는지에 대한 기록입니다.</p>' +
             '<div class="hero__actions">' +
-              '<a class="btn" href="#/portfolio">작업 전체 보기 <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>' +
-              '<a class="btn btn--ghost" href="#/about">소개 및 역량</a>' +
+              '<a class="btn magnet" href="#/portfolio">작업 전체 보기 <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>' +
+              '<a class="btn btn--ghost magnet" href="#/about">소개 및 역량</a>' +
             '</div>' +
           '</div>' +
           '<dl class="facts">' +
@@ -292,7 +292,7 @@
       '<section class="page-head"><div class="container">' +
         '<div class="page-head__top"><span class="idx">About</span><span class="label">' + esc(SITE.role) + '</span></div>' +
         '<div class="page-head__grid">' +
-          '<h1 class="h1">보기 좋은 화면보다<br>설명할 수 있는 화면을 만듭니다.</h1>' +
+          '<h1 class="h1" data-split>보기 좋은 화면보다<br>설명할 수 있는 화면을 만듭니다.</h1>' +
           '<p class="lede page-head__lede">디자인을 넘길 때 “왜 이렇게 했나요”라는 질문에 근거로 답할 수 있는 상태를 목표로 합니다. 아래는 제가 실제로 할 수 있는 일과, 그 일을 하는 순서입니다.</p>' +
         '</div>' +
       '</div></section>' +
@@ -400,7 +400,7 @@
         '<div class="page-head__top"><span class="idx">Portfolio</span>' +
         '<span class="label">' + projects.length + ' Projects · 2023–' + YEAR + '</span></div>' +
         '<div class="page-head__grid">' +
-          '<h1 class="h1">자르지 않고<br>원래 비율로 모아 둔 아카이브.</h1>' +
+          '<h1 class="h1" data-split>자르지 않고<br>원래 비율로 모아 둔 아카이브.</h1>' +
           '<p class="lede page-head__lede">포스터, 모바일 화면, 긴 상세페이지는 애초에 비율이 다릅니다. 같은 크기의 카드에 맞춰 잘라내면 원래 의도한 프레임이 사라지기 때문에, 여기서는 모든 작업물을 원본 비율 그대로 둡니다.</p>' +
         '</div>' +
       '</div></section>' +
@@ -532,7 +532,7 @@
       '<section class="page-head"><div class="container">' +
         '<div class="page-head__top"><span class="idx">Contact</span><span class="label">' + esc(SITE.available) + '</span></div>' +
         '<div class="page-head__grid">' +
-          '<h1 class="h1">채용 · 협업 문의를<br>기다리고 있습니다.</h1>' +
+          '<h1 class="h1" data-split>채용 · 협업 문의를<br>기다리고 있습니다.</h1>' +
           '<p class="lede page-head__lede">포트폴리오 원본(PDF)이나 이력서가 필요하시면 아래로 요청해 주세요. 평일 기준 하루 안에 회신합니다.</p>' +
         '</div>' +
       '</div></section>' +

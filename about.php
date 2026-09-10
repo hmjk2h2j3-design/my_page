@@ -77,7 +77,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="page-head__grid">
-      <h1 class="h1">
+      <h1 class="h1" data-split>
         보기 좋은 화면보다<br>
         설명할 수 있는 화면을 만듭니다.
       </h1>

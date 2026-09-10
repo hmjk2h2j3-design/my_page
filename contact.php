@@ -69,7 +69,7 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <div class="page-head__grid">
-      <h1 class="h1">
+      <h1 class="h1" data-split>
         채용 · 협업 문의를<br>
         기다리고 있습니다.
       </h1>
